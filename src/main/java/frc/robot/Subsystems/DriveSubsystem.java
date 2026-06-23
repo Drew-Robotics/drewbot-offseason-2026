@@ -16,12 +16,15 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
-public class DriveSubsystem {
+public class DriveSubsystem extends SubsystemBase{
     private final List<SwerveModule> m_swerveModules;
     private final Pigeon2 m_gyro;
     private final SwerveDrivePoseEstimator m_poser;
+
+    private static DriveSubsystem m_instance;
 
     public DriveSubsystem () {
         m_swerveModules = List.of(
@@ -84,6 +87,13 @@ public class DriveSubsystem {
             new Pose2d());  
     }
 
+    public static final DriveSubsystem getInstance() {
+        if(m_instance==null){
+            m_instance = new DriveSubsystem();
+        }
+        return m_instance;
+    }
+
     private void setSwerveModuleStates(List<SwerveModuleState> states){
         for(int i = 0; i<4; i++){
             m_swerveModules.get(i).setState(states.get(i));
@@ -103,11 +113,16 @@ public class DriveSubsystem {
             .toArray(SwerveModulePosition[]::new);
     }
 
-    public void fieldOrientedDrive (LinearVelocity xVel, LinearVelocity zVel, AngularVelocity rotVel) {
-        ChassisSpeeds sped = new ChassisSpeeds(
-            xVel.in(Units.MetersPerSecond), 
-            zVel.in(Units.MetersPerSecond), 
-            rotVel.in(Units.RadiansPerSecond));
-        setChassisSpeed(sped);
+    public void fieldOrientedDrive (LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
+        ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rotVel.in(Units.RadiansPerSecond));
+        speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, m_gyro.getRotation2d());
+        setChassisSpeed(speeds);
+    }
+
+    @Override
+    public void periodic(){
+        super.periodic();
+
+        m_poser.update(new Rotation2d(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
     }
 }
