@@ -6,12 +6,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Commands.DriveCommand;
-import frc.robot.Controller.DriverController;
-import frc.robot.Subsystems.DriveSubsystem;
+
+import frc.robot.controller.DriverController;
+import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.commands.DriveCommand;
 
 public class RobotContainer {
-  private final DriverController m_driverController = new DriverController(0); //MAKE THE GODDAMN CONSTANTS FILE FINNY - past you whose currently too lazy to
+  private final DriverController m_driverController = new DriverController (0); //MAKE THE GODDAMN CONSTANTS FILE FINNY - past you whose currently too lazy to
 
   public RobotContainer() {
     configureBindings();

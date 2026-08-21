@@ -1,4 +1,4 @@
-package frc.robot.Controller;
+package frc.robot.controller;
 
 public class DriverController extends Controller{
     public DriverController (int port) {

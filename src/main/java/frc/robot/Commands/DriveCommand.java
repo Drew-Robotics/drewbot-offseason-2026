@@ -1,11 +1,11 @@
-package frc.robot.Commands;
+package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.DriveSubsystem;
+import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class DriveCommand extends Command {
     private DoubleSupplier m_xVel;

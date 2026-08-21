@@ -1,4 +1,4 @@
-package frc.robot.Subsystems;
+package frc.robot.subsystems.drive;
 
 import java.lang.module.Configuration;
 
@@ -15,7 +15,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
-import frc.robot.Constants.DriveConstants.DriveMotorConstants;
+import frc.robot.constants.DriveConstants.DriveMotorConstants;
 
 //MOTOR NOTES: drive motors have no encoders, everything's brushless, everything's flex controllers
 

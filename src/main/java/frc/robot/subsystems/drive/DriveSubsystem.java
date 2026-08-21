@@ -1,9 +1,8 @@
-package frc.robot.Subsystems;
+package frc.robot.subsystems.drive;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -17,7 +16,7 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase{
     private final List<SwerveModule> m_swerveModules;
@@ -100,6 +99,12 @@ public class DriveSubsystem extends SubsystemBase{
         }//this ts only works because both the kinematics list and m_swervemodules list go in the same order (fl fr bl br) and I use that order everywhere I call this, it's cooked and you should code a better function if you're doing this yourslef
     }
 
+    private SwerveModulePosition[] getModulePositions(){
+    return m_swerveModules.stream()
+        .map(SwerveModule -> SwerveModule.getPosition())
+        .toArray(SwerveModulePosition[]::new);
+    }
+
     public void setChassisSpeed(ChassisSpeeds speeds){
         SwerveModuleState[] states = DriveConstants.kKinematics.toSwerveModuleStates(speeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.maxSpeed);
@@ -107,16 +112,14 @@ public class DriveSubsystem extends SubsystemBase{
         setSwerveModuleStates(statesList);
     }
 
-    private SwerveModulePosition[] getModulePositions(){
-        return m_swerveModules.stream()
-            .map(SwerveModule -> SwerveModule.getPosition())
-            .toArray(SwerveModulePosition[]::new);
-    }
-
     public void fieldOrientedDrive (LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
         ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rotVel.in(Units.RadiansPerSecond));
         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, m_gyro.getRotation2d());
         setChassisSpeed(speeds);
+    }
+
+    public Pose2d getPose () {
+        return m_poser.getEstimatedPosition();
     }
 
     @Override
