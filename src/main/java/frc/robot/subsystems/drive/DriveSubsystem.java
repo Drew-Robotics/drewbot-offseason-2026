@@ -39,46 +39,46 @@ public class DriveSubsystem extends SubsystemBase{
                     DriveConstants.FrontLeftModule.kDriveInverted
                 ),
                 DriveConstants.FrontLeftModule.kOffset
+            ),
+            new SwerveModule(
+                "FrontRight", 
+                new TurnMotor(
+                    DriveConstants.FrontRightModule.kTurnCANID, 
+                    DriveConstants.FrontRightModule.kTurnInverted,
+                    DriveConstants.FrontRightModule.kAnalogInput
+                ),
+                new DriveMotor(
+                    DriveConstants.FrontRightModule.kDriveCANID, 
+                    DriveConstants.FrontRightModule.kDriveInverted
+                ),
+                DriveConstants.FrontRightModule.kOffset
+            ),
+            new SwerveModule(
+                "BackLeft", 
+                new TurnMotor(
+                    DriveConstants.BackLeftModule.kTurnCANID, 
+                    DriveConstants.BackLeftModule.kTurnInverted,
+                    DriveConstants.BackLeftModule.kAnalogInput
+                ),
+                new DriveMotor(
+                    DriveConstants.BackLeftModule.kDriveCANID, 
+                    DriveConstants.BackLeftModule.kDriveInverted
+                ),
+                DriveConstants.BackLeftModule.kOffset
+            ),
+            new SwerveModule(
+                "BackRight", 
+                new TurnMotor(
+                    DriveConstants.BackRightModule.kTurnCANID, 
+                    DriveConstants.BackRightModule.kTurnInverted,
+                    DriveConstants.BackRightModule.kAnalogInput
+                ),
+                new DriveMotor(
+                    DriveConstants.BackRightModule.kDriveCANID, 
+                    DriveConstants.BackRightModule.kDriveInverted
+                ),
+                DriveConstants.BackRightModule.kOffset
             )
-            // new SwerveModule(
-            //     "FrontRight", 
-            //     new TurnMotor(
-            //         DriveConstants.FrontRightModule.kTurnCANID, 
-            //         DriveConstants.FrontRightModule.kTurnInverted,
-            //         DriveConstants.FrontRightModule.kAnalogInput
-            //     ),
-            //     new DriveMotor(
-            //         DriveConstants.FrontRightModule.kDriveCANID, 
-            //         DriveConstants.FrontRightModule.kDriveInverted
-            //     ),
-            //     DriveConstants.FrontRightModule.kOffset
-            // ),
-            // new SwerveModule(
-            //     "BackLeft", 
-            //     new TurnMotor(
-            //         DriveConstants.BackLeftModule.kTurnCANID, 
-            //         DriveConstants.BackLeftModule.kTurnInverted,
-            //         DriveConstants.BackLeftModule.kAnalogInput
-            //     ),
-            //     new DriveMotor(
-            //         DriveConstants.BackLeftModule.kDriveCANID, 
-            //         DriveConstants.BackLeftModule.kDriveInverted
-            //     ),
-            //     DriveConstants.BackLeftModule.kOffset
-            // ),
-            // new SwerveModule(
-            //     "BackRight", 
-            //     new TurnMotor(
-            //         DriveConstants.BackRightModule.kTurnCANID, 
-            //         DriveConstants.BackRightModule.kTurnInverted,
-            //         DriveConstants.BackRightModule.kAnalogInput
-            //     ),
-            //     new DriveMotor(
-            //         DriveConstants.BackRightModule.kDriveCANID, 
-            //         DriveConstants.BackRightModule.kDriveInverted
-            //     ),
-            //     DriveConstants.BackRightModule.kOffset
-            // )
         );
 
         m_gyro = new Pigeon2(DriveConstants.GyroscopeConstants.kCanID);
