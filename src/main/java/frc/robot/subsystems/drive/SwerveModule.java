@@ -15,13 +15,10 @@ public class SwerveModule {
 
     Rotation2d m_offset; //we use rotation2d bc that's what the swervemodulestate methods intake
     
-    public SwerveModule (String name, TurnMotor turnMotor, DriveMotor driveMotor, Rotation2d angle) {
-        m_name = name;
+    public SwerveModule (TurnMotor turnMotor, DriveMotor driveMotor) {
         
         m_turnMotor = turnMotor;
         m_driveMotor = driveMotor;
-
-        m_offset = angle; //offset between the robot and module when 0'd
     }
 
     private Rotation2d angleRelativeToRobot(Rotation2d angle){
@@ -48,7 +45,6 @@ public class SwerveModule {
     }
 
     public SwerveModuleState getState() {
-        m_turnMotor.printEncoderValues();
         return new SwerveModuleState(getDriveSpeed(), angleRelativeToRobot(m_turnMotor.getAngle()));
     }
 
@@ -70,5 +66,9 @@ public class SwerveModule {
 
     public void encoderVoltageCheck(){
         m_turnMotor.encoderVoltageCheck();
+    }
+
+    public void periodic() {
+        m_turnMotor.periodic();
     }
 }

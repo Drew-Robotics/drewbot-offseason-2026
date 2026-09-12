@@ -14,6 +14,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.constants.DriveConstants.TurnMotorConstants;
 
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -23,11 +24,15 @@ public class TurnMotor {
     private SparkFlex m_motor;
     private SparkClosedLoopController m_closedLoopController;
     private SparkAnalogSensor m_encoder;
+    private String m_name;
+    private double m_offset;
 
-    public TurnMotor (int motorID, boolean inverted, AnalogInput input) {
+    public TurnMotor (String name, int motorID, boolean inverted, AnalogInput input, double offset) {
         m_motor = new SparkFlex(motorID, MotorType.kBrushless);
         m_closedLoopController = m_motor.getClosedLoopController();
         m_encoder = m_motor.getAnalog();
+        m_name = name;
+        m_offset = offset;
         
         SparkFlexConfig motorConfig = new SparkFlexConfig();
 
@@ -35,6 +40,7 @@ public class TurnMotor {
             .idleMode(IdleMode.kCoast)
             .smartCurrentLimit(TurnMotorConstants.kCurrentLimit);
         motorConfig.absoluteEncoder
+            .zeroOffset(m_offset)
             .positionConversionFactor(1)
             .velocityConversionFactor(1);
         motorConfig.closedLoop
@@ -59,11 +65,11 @@ public class TurnMotor {
         m_closedLoopController.setSetpoint(targetAngle.getRadians(), ControlType.kPosition);
     }
 
-    public void encoderVoltageCheck() {
-        m_encoder.getVoltage();
+    public double encoderVoltageCheck() {
+        return m_encoder.getVoltage();
     }
 
-    public void printEncoderValues() {
-        System.out.println(getAngle().getDegrees());
+    public void periodic() {
+        SmartDashboard.putNumber(m_name + " Encoder" , encoderVoltageCheck());
     }
 }

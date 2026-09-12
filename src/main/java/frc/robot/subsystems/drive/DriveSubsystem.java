@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DriveConstants;
 
@@ -28,34 +29,34 @@ public class DriveSubsystem extends SubsystemBase{
     public DriveSubsystem () {
         m_swerveModules = List.of(
             new SwerveModule(
-                "FrontLeft", 
                 new TurnMotor(
+                    "FL",
                     DriveConstants.FrontLeftModule.kTurnCANID, 
                     DriveConstants.FrontLeftModule.kTurnInverted,
-                    DriveConstants.FrontLeftModule.kAnalogInput
+                    DriveConstants.FrontLeftModule.kAnalogInput,
+                    DriveConstants.FrontLeftModule.kOffset
                 ),
                 new DriveMotor(
                     DriveConstants.FrontLeftModule.kDriveCANID, 
                     DriveConstants.FrontLeftModule.kDriveInverted
-                ),
-                DriveConstants.FrontLeftModule.kOffset
+                )
             ),
             new SwerveModule(
-                "FrontRight", 
                 new TurnMotor(
+                    "FR",
                     DriveConstants.FrontRightModule.kTurnCANID, 
                     DriveConstants.FrontRightModule.kTurnInverted,
-                    DriveConstants.FrontRightModule.kAnalogInput
+                    DriveConstants.FrontRightModule.kAnalogInput,
+                    DriveConstants.FrontRightModule.kOffset
                 ),
                 new DriveMotor(
                     DriveConstants.FrontRightModule.kDriveCANID, 
                     DriveConstants.FrontRightModule.kDriveInverted
-                ),
-                DriveConstants.FrontRightModule.kOffset
+                )
             ),
             new SwerveModule(
-                "BackLeft", 
                 new TurnMotor(
+                    "BL",
                     DriveConstants.BackLeftModule.kTurnCANID, 
                     DriveConstants.BackLeftModule.kTurnInverted,
                     DriveConstants.BackLeftModule.kAnalogInput
@@ -63,12 +64,11 @@ public class DriveSubsystem extends SubsystemBase{
                 new DriveMotor(
                     DriveConstants.BackLeftModule.kDriveCANID, 
                     DriveConstants.BackLeftModule.kDriveInverted
-                ),
-                DriveConstants.BackLeftModule.kOffset
+                )
             ),
             new SwerveModule(
-                "BackRight", 
                 new TurnMotor(
+                    "BR",
                     DriveConstants.BackRightModule.kTurnCANID, 
                     DriveConstants.BackRightModule.kTurnInverted,
                     DriveConstants.BackRightModule.kAnalogInput
@@ -76,8 +76,7 @@ public class DriveSubsystem extends SubsystemBase{
                 new DriveMotor(
                     DriveConstants.BackRightModule.kDriveCANID, 
                     DriveConstants.BackRightModule.kDriveInverted
-                ),
-                DriveConstants.BackRightModule.kOffset
+                )
             )
         );
 
@@ -130,10 +129,15 @@ public class DriveSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
         super.periodic();
-        m_swerveModules.get(0).encoderVoltageCheck();
         for(int i = 0; i < 4; i++) {
-            m_swerveModules.get(i).getState();
+            m_swerveModules.get(i).periodic();
         }
+        m_swerveModules.get(0).encoderVoltageCheck();
+        SmartDashboard.putNumber("FL ENC", m_swerveModules.get(0).m_turnMotor.getAngle().getDegrees());
+        SmartDashboard.putNumber("FR ENC", m_swerveModules.get(1).m_turnMotor.getAngle().getDegrees());
+        SmartDashboard.putNumber("BL ENC", m_swerveModules.get(2).m_turnMotor.getAngle().getDegrees());
+        SmartDashboard.putNumber("BR ENC", m_swerveModules.get(3).m_turnMotor.getAngle().getDegrees());
+
         m_poser.update(new Rotation2d(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
     }
 }

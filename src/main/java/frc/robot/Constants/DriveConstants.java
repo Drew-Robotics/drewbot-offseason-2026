@@ -56,7 +56,7 @@ public class DriveConstants {
         public static final int kTurnCANID = 6;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
+        public static final double kOffset = 2.845;
     }
     public static final class FrontRightModule {
         public static final int kDriveCANID = 3;
@@ -66,7 +66,7 @@ public class DriveConstants {
         public static final int kTurnCANID = 4;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
+        public static final double kOffset = 3.865;
     }
     public static final class BackRightModule {
         public static final int kDriveCANID = 1;
@@ -76,7 +76,7 @@ public class DriveConstants {
         public static final int kTurnCANID = 2;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
+        public static final double kOffset = 2.4927;
     }
     public static final class BackLeftModule {
         public static final int kDriveCANID = 7;
@@ -86,7 +86,7 @@ public class DriveConstants {
         public static final int kTurnCANID = 8;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
+        public static final double kOffset = 0.842;
     }
 
     public static final class kBodyMeasures{
