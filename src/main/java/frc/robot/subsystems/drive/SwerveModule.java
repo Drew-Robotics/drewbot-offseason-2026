@@ -48,6 +48,7 @@ public class SwerveModule {
     }
 
     public SwerveModuleState getState() {
+        m_turnMotor.printEncoderValues();
         return new SwerveModuleState(getDriveSpeed(), angleRelativeToRobot(m_turnMotor.getAngle()));
     }
 
@@ -67,5 +68,7 @@ public class SwerveModule {
         return m_turnMotor.getAngle();
     }
 
-    
+    public void encoderVoltageCheck(){
+        m_turnMotor.encoderVoltageCheck();
+    }
 }

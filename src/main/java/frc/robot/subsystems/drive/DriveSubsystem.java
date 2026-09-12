@@ -31,53 +31,57 @@ public class DriveSubsystem extends SubsystemBase{
                 "FrontLeft", 
                 new TurnMotor(
                     DriveConstants.FrontLeftModule.kTurnCANID, 
-                    DriveConstants.FrontLeftModule.kTurnInverted
+                    DriveConstants.FrontLeftModule.kTurnInverted,
+                    DriveConstants.FrontLeftModule.kAnalogInput
                 ),
                 new DriveMotor(
                     DriveConstants.FrontLeftModule.kDriveCANID, 
                     DriveConstants.FrontLeftModule.kDriveInverted
                 ),
                 DriveConstants.FrontLeftModule.kOffset
-            ),
-            new SwerveModule(
-                "FrontRight", 
-                new TurnMotor(
-                    DriveConstants.FrontRightModule.kTurnCANID, 
-                    DriveConstants.FrontRightModule.kTurnInverted
-                ),
-                new DriveMotor(
-                    DriveConstants.FrontRightModule.kDriveCANID, 
-                    DriveConstants.FrontRightModule.kDriveInverted
-                ),
-                DriveConstants.FrontRightModule.kOffset
-            ),
-            new SwerveModule(
-                "BackLeft", 
-                new TurnMotor(
-                    DriveConstants.BackLeftModule.kTurnCANID, 
-                    DriveConstants.BackLeftModule.kTurnInverted
-                ),
-                new DriveMotor(
-                    DriveConstants.BackLeftModule.kDriveCANID, 
-                    DriveConstants.BackLeftModule.kDriveInverted
-                ),
-                DriveConstants.BackLeftModule.kOffset
-            ),
-            new SwerveModule(
-                "BackRight", 
-                new TurnMotor(
-                    DriveConstants.BackRightModule.kTurnCANID, 
-                    DriveConstants.BackRightModule.kTurnInverted
-                ),
-                new DriveMotor(
-                    DriveConstants.BackRightModule.kDriveCANID, 
-                    DriveConstants.BackRightModule.kDriveInverted
-                ),
-                DriveConstants.BackRightModule.kOffset
             )
+            // new SwerveModule(
+            //     "FrontRight", 
+            //     new TurnMotor(
+            //         DriveConstants.FrontRightModule.kTurnCANID, 
+            //         DriveConstants.FrontRightModule.kTurnInverted,
+            //         DriveConstants.FrontRightModule.kAnalogInput
+            //     ),
+            //     new DriveMotor(
+            //         DriveConstants.FrontRightModule.kDriveCANID, 
+            //         DriveConstants.FrontRightModule.kDriveInverted
+            //     ),
+            //     DriveConstants.FrontRightModule.kOffset
+            // ),
+            // new SwerveModule(
+            //     "BackLeft", 
+            //     new TurnMotor(
+            //         DriveConstants.BackLeftModule.kTurnCANID, 
+            //         DriveConstants.BackLeftModule.kTurnInverted,
+            //         DriveConstants.BackLeftModule.kAnalogInput
+            //     ),
+            //     new DriveMotor(
+            //         DriveConstants.BackLeftModule.kDriveCANID, 
+            //         DriveConstants.BackLeftModule.kDriveInverted
+            //     ),
+            //     DriveConstants.BackLeftModule.kOffset
+            // ),
+            // new SwerveModule(
+            //     "BackRight", 
+            //     new TurnMotor(
+            //         DriveConstants.BackRightModule.kTurnCANID, 
+            //         DriveConstants.BackRightModule.kTurnInverted,
+            //         DriveConstants.BackRightModule.kAnalogInput
+            //     ),
+            //     new DriveMotor(
+            //         DriveConstants.BackRightModule.kDriveCANID, 
+            //         DriveConstants.BackRightModule.kDriveInverted
+            //     ),
+            //     DriveConstants.BackRightModule.kOffset
+            // )
         );
 
-        m_gyro = new Pigeon2(DriveConstants.Gyroscope.kCanID);
+        m_gyro = new Pigeon2(DriveConstants.GyroscopeConstants.kCanID);
 
         m_poser = new SwerveDrivePoseEstimator(
             DriveConstants.kKinematics, 
@@ -122,10 +126,14 @@ public class DriveSubsystem extends SubsystemBase{
         return m_poser.getEstimatedPosition();
     }
 
+
     @Override
     public void periodic(){
         super.periodic();
-
+        m_swerveModules.get(0).encoderVoltageCheck();
+        for(int i = 0; i < 4; i++) {
+            m_swerveModules.get(i).getState();
+        }
         m_poser.update(new Rotation2d(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
     }
 }

@@ -8,19 +8,24 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class DriveConstants {
-    public static final LinearVelocity maxSpeed = Units.MetersPerSecond.of(0);
+    public static final LinearVelocity maxSpeed = Units.MetersPerSecond.of(10);
 
-    public static final class Gyroscope{
+    public static final class GyroscopeConstants {
         public static final int kCanID = 0;
     }
 
-    public static final class TurnMotorConstants{
-        public static final int kCurrentLimit = 0;
+    public static final class EncoderConstants {
+        public static final Angle EncoderConversion = Units.Radians.of(0); //converting from volts to radians
+    }
 
-        public static final Angle kPositionConversionFactor = Units.Radians.of(0); //radians pls queen
-        public static final AngularVelocity kVelocityConversionFactor = Units.RadiansPerSecond.of(0);
+    public static final class TurnMotorConstants{
+        public static final int kCurrentLimit = 20;
+
+        public static final Angle kPositionConversionFactor = Units.Radians.of(0.24166); //radians pls queen
+        public static final AngularVelocity kVelocityConversionFactor = Units.RadiansPerSecond.of(0.24166);
 
         public static final class PID {
             public static final double kP = 0;
@@ -30,10 +35,10 @@ public class DriveConstants {
     }
 
     public static final class DriveMotorConstants{
-        public static final int kCurrentLimit = 0;
+        public static final int kCurrentLimit = 40;
 
-        public static final Distance kPositionConversionFactor = Units.Meters.of(0); //these ts variables need to be meters pls, stop being lazy you freaking troglodyte
-        public static final LinearVelocity kVelocityConversionFactor = Units.MetersPerSecond.of(0);
+        public static final Distance kPositionConversionFactor = Units.Meters.of(0.05678); //these ts variables need to be meters pls, stop being lazy you freaking neanderthal
+        public static final LinearVelocity kVelocityConversionFactor = Units.MetersPerSecond.of(0.05678);
 
         public static final class PID {
             public static final double kP = 0;
@@ -44,37 +49,41 @@ public class DriveConstants {
 
 
     public static final class FrontLeftModule {
-        public static final int kDriveCANID = 0;
+        public static final int kDriveCANID = 5;
+        public static final AnalogInput kAnalogInput = new AnalogInput(1);
         public static final boolean kDriveInverted = false;
 
-        public static final int kTurnCANID = 0;
+        public static final int kTurnCANID = 6;
         public static final boolean kTurnInverted = false;
 
         public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
     }
     public static final class FrontRightModule {
-        public static final int kDriveCANID = 0;
+        public static final int kDriveCANID = 3;
+        public static final AnalogInput kAnalogInput = new AnalogInput(3);
         public static final boolean kDriveInverted = false;
 
-        public static final int kTurnCANID = 0;
+        public static final int kTurnCANID = 4;
         public static final boolean kTurnInverted = false;
 
         public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
     }
     public static final class BackRightModule {
-        public static final int kDriveCANID = 0;
+        public static final int kDriveCANID = 1;
+        public static final AnalogInput kAnalogInput = new AnalogInput(2);
         public static final boolean kDriveInverted = false;
 
-        public static final int kTurnCANID = 0;
+        public static final int kTurnCANID = 2;
         public static final boolean kTurnInverted = false;
 
         public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);
     }
     public static final class BackLeftModule {
-        public static final int kDriveCANID = 0;
+        public static final int kDriveCANID = 7;
+        public static final AnalogInput kAnalogInput = new AnalogInput(0);
         public static final boolean kDriveInverted = false;
 
-        public static final int kTurnCANID = 0;
+        public static final int kTurnCANID = 8;
         public static final boolean kTurnInverted = false;
 
         public static final Rotation2d kOffset = Rotation2d.fromDegrees(0);

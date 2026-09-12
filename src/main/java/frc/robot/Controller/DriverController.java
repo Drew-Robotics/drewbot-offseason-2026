@@ -14,6 +14,6 @@ public class DriverController extends Controller{
     }
 
     public double getDriveRot() {
-        return applyDeadband(getRightX());
+        return applyDeadband(getRightX());//I wanna make it so that this has multiple aiming options
     }
 }

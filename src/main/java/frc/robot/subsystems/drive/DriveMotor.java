@@ -3,13 +3,14 @@ package frc.robot.subsystems.drive;
 import java.lang.module.Configuration;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.units.Units;
@@ -30,18 +31,17 @@ public class DriveMotor {
         m_encoder = m_motor.getEncoder();
         m_closedLoopController = m_motor.getClosedLoopController();
 
-        SparkMaxConfig motorConfig = new SparkMaxConfig();
+        SparkFlexConfig motorConfig = new SparkFlexConfig();
 
         motorConfig
             .idleMode(IdleMode.kCoast)
             .smartCurrentLimit(0);
         motorConfig.encoder
-            .inverted(inverted)
-            .positionConversionFactor(0)
-            .velocityConversionFactor(0);
+            .positionConversionFactor(1)
+            .velocityConversionFactor(1);
         motorConfig.closedLoop
             .pid(DriveMotorConstants.PID.kP, DriveMotorConstants.PID.kI, DriveMotorConstants.PID.kD)
-            .feedbackSensor(null)
+            .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)
             .outputRange(-1, 1);
 
         m_motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

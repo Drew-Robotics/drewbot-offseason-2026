@@ -4,28 +4,33 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.controller.DriverController;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.commands.DriveCommand;
+import frc.robot.constants.MiscConstants;
 
 public class RobotContainer {
-  private final DriverController m_driverController = new DriverController (0); //MAKE THE GODDAMN CONSTANTS FILE FINNY - past you whose currently too lazy to
+  private final DriverController m_driverController;
+  private final DriveSubsystem m_driveSub;
 
   public RobotContainer() {
+    m_driverController = new DriverController(MiscConstants.kDriverControllerPort); 
+    m_driveSub = new DriveSubsystem();
     configureBindings();
   }
 
   private void configureBindings() {
-    DriveSubsystem.getInstance().setDefaultCommand(
-      new DriveCommand(
-        m_driverController::getDriveX,
-        m_driverController::getDriveY,
-        m_driverController::getDriveRot
-      )
-    );
+    // DriveSubsystem.getInstance().setDefaultCommand(
+    //   new DriveCommand(
+    //     m_driverController::getDriveX,
+    //     m_driverController::getDriveY,
+    //     m_driverController::getDriveRot
+    //   )
+    // );
   }
 
   public Command getAutonomousCommand() {
