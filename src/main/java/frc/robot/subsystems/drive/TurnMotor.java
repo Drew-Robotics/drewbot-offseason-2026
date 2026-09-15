@@ -13,8 +13,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.constants.DriveConstants;
 import frc.robot.constants.DriveConstants.TurnMotorConstants;
 
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -27,7 +27,7 @@ public class TurnMotor {
     private String m_name;
     private double m_offset;
 
-    public TurnMotor (String name, int motorID, boolean inverted, AnalogInput input, double offset) {
+    public TurnMotor (String name, int motorID, boolean inverted, double offset) {
         m_motor = new SparkFlex(motorID, MotorType.kBrushless);
         m_closedLoopController = m_motor.getClosedLoopController();
         m_encoder = m_motor.getAnalog();
@@ -41,7 +41,7 @@ public class TurnMotor {
             .smartCurrentLimit(TurnMotorConstants.kCurrentLimit);
         motorConfig.absoluteEncoder
             .zeroOffset(m_offset)
-            .positionConversionFactor(1)
+            .positionConversionFactor(DriveConstants.EncoderConstants.kPositionConversionFactor.in(Units.Radians))
             .velocityConversionFactor(1);
         motorConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kAnalogSensor)

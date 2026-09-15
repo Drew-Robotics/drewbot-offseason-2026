@@ -14,17 +14,17 @@ public class DriveConstants {
     public static final LinearVelocity maxSpeed = Units.MetersPerSecond.of(10);
 
     public static final class GyroscopeConstants {
-        public static final int kCanID = 0;
+        public static final int kCanID = 10;
     }
 
     public static final class EncoderConstants {
-        public static final Angle EncoderConversion = Units.Radians.of(0); //converting from volts to radians
+        public static final Angle kPositionConversionFactor = Units.Radians.of(1.256637061); //converting from volts to radians (2pi/5)
     }
 
     public static final class TurnMotorConstants{
         public static final int kCurrentLimit = 20;
 
-        public static final Angle kPositionConversionFactor = Units.Radians.of(0.24166); //radians pls queen
+        public static final Angle kPositionConversionFactor = Units.Radians.of(0.24166); 
         public static final AngularVelocity kVelocityConversionFactor = Units.RadiansPerSecond.of(0.24166);
 
         public static final class PID {
@@ -37,7 +37,7 @@ public class DriveConstants {
     public static final class DriveMotorConstants{
         public static final int kCurrentLimit = 40;
 
-        public static final Distance kPositionConversionFactor = Units.Meters.of(0.05678); //these ts variables need to be meters pls, stop being lazy you freaking neanderthal
+        public static final Distance kPositionConversionFactor = Units.Meters.of(0.05678);
         public static final LinearVelocity kVelocityConversionFactor = Units.MetersPerSecond.of(0.05678);
 
         public static final class PID {

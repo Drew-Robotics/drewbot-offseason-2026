@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.constants.MiscConstants;
 
 public class Controller extends CommandXboxController{
-    private static final double m_deadband = MiscConstants.kDeadBand; //This should 100% be in a constants file but I'm being lazy af rn
+    private static final double m_deadband = MiscConstants.kDeadBand;
 
     public Controller (int port){
         super(port);

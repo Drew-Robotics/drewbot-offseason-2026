@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
+import frc.robot.constants.DriveConstants;
 import frc.robot.constants.DriveConstants.DriveMotorConstants;
 
 //MOTOR NOTES: drive motors have no encoders, everything's brushless, everything's flex controllers
@@ -37,8 +38,8 @@ public class DriveMotor {
             .idleMode(IdleMode.kCoast)
             .smartCurrentLimit(0);
         motorConfig.encoder
-            .positionConversionFactor(1)
-            .velocityConversionFactor(1);
+            .positionConversionFactor(DriveConstants.DriveMotorConstants.kPositionConversionFactor.in(Units.Meters))
+            .velocityConversionFactor(DriveConstants.DriveMotorConstants.kVelocityConversionFactor.in(Units.MetersPerSecond));
         motorConfig.closedLoop
             .pid(DriveMotorConstants.PID.kP, DriveMotorConstants.PID.kI, DriveMotorConstants.PID.kD)
             .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)

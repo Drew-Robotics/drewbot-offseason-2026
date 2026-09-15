@@ -24,13 +24,13 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // DriveSubsystem.getInstance().setDefaultCommand(
-    //   new DriveCommand(
-    //     m_driverController::getDriveX,
-    //     m_driverController::getDriveY,
-    //     m_driverController::getDriveRot
-    //   )
-    // );
+    DriveSubsystem.getInstance().setDefaultCommand(
+      new DriveCommand(
+        m_driverController::getDriveX,
+        m_driverController::getDriveY,
+        m_driverController::getDriveRot
+      )
+    );
   }
 
   public Command getAutonomousCommand() {

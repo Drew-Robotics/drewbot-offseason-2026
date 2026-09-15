@@ -33,7 +33,6 @@ public class DriveSubsystem extends SubsystemBase{
                     "FL",
                     DriveConstants.FrontLeftModule.kTurnCANID, 
                     DriveConstants.FrontLeftModule.kTurnInverted,
-                    DriveConstants.FrontLeftModule.kAnalogInput,
                     DriveConstants.FrontLeftModule.kOffset
                 ),
                 new DriveMotor(
@@ -46,7 +45,6 @@ public class DriveSubsystem extends SubsystemBase{
                     "FR",
                     DriveConstants.FrontRightModule.kTurnCANID, 
                     DriveConstants.FrontRightModule.kTurnInverted,
-                    DriveConstants.FrontRightModule.kAnalogInput,
                     DriveConstants.FrontRightModule.kOffset
                 ),
                 new DriveMotor(
@@ -59,7 +57,7 @@ public class DriveSubsystem extends SubsystemBase{
                     "BL",
                     DriveConstants.BackLeftModule.kTurnCANID, 
                     DriveConstants.BackLeftModule.kTurnInverted,
-                    DriveConstants.BackLeftModule.kAnalogInput
+                    DriveConstants.BackLeftModule.kOffset
                 ),
                 new DriveMotor(
                     DriveConstants.BackLeftModule.kDriveCANID, 
@@ -71,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase{
                     "BR",
                     DriveConstants.BackRightModule.kTurnCANID, 
                     DriveConstants.BackRightModule.kTurnInverted,
-                    DriveConstants.BackRightModule.kAnalogInput
+                    DriveConstants.BackRightModule.kOffset
                 ),
                 new DriveMotor(
                     DriveConstants.BackRightModule.kDriveCANID, 
@@ -115,7 +113,7 @@ public class DriveSubsystem extends SubsystemBase{
         setSwerveModuleStates(statesList);
     }
 
-    public void fieldOrientedDrive (LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
+    public void fieldOrientedDrive(LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
         ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rotVel.in(Units.RadiansPerSecond));
         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, m_gyro.getRotation2d());
         setChassisSpeed(speeds);
