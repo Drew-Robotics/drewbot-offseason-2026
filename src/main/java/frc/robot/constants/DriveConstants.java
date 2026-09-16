@@ -37,6 +37,10 @@ public class DriveConstants {
 
         //thrifty encoder on the flex data port reports 0-5V for one full module rotation
         public static final double kAnalogMaxVolts = 5.0;
+        //analog status frame period. fast for the noise capture (URCL logs it, 5ms = 200Hz, can see noise up to
+        //100Hz). adds CAN traffic, put back to 20 once we've picked analog vs internal
+        public static final int kAnalogStatusPeriodMs = 5;
+
         //flip this if positive turn voltage makes the encoder angle go DOWN (should be CCW positive looking from above)
         public static final boolean kEncoderInverted = false;
 

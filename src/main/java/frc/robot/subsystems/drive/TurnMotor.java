@@ -19,7 +19,7 @@ import edu.wpi.first.units.measure.Voltage;
 import frc.robot.constants.DriveConstants.TurnMotorConstants;
 
 /**
- * Closed loop runs in the flex on the vortex's internal encoder (less noise + lag than the analog).
+ * Closed loop runs in the flex on the vortex's internal encoder (less noise than the analog, but blind to backlash).
  * The internal encoder only knows relative position, so we seed it from the thrifty absolute encoder
  * at boot, whenever the robot is disabled and the module is still, and if the flex ever resets.
  */
@@ -72,8 +72,8 @@ public class TurnMotor {
             .primaryEncoderVelocityPeriodMs(10)
             .appliedOutputPeriodMs(10)
             .busVoltagePeriodMs(10)
-            .analogPositionPeriodMs(20)
-            .analogVoltagePeriodMs(20);
+            .analogPositionPeriodMs(TurnMotorConstants.kAnalogStatusPeriodMs)
+            .analogVoltagePeriodMs(TurnMotorConstants.kAnalogStatusPeriodMs);
 
         m_motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_motor.clearFaults();
