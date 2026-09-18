@@ -15,11 +15,9 @@ import frc.robot.constants.MiscConstants;
 
 public class RobotContainer {
   private final DriverController m_driverController;
-  private final DriveSubsystem m_driveSub;
 
   public RobotContainer() {
     m_driverController = new DriverController(MiscConstants.kDriverControllerPort); 
-    m_driveSub = new DriveSubsystem();
     configureBindings();
   }
 

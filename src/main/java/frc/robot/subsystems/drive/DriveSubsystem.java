@@ -38,7 +38,8 @@ public class DriveSubsystem extends SubsystemBase{
                 new DriveMotor(
                     DriveConstants.FrontLeftModule.kDriveCANID, 
                     DriveConstants.FrontLeftModule.kDriveInverted
-                )
+                ),
+                DriveConstants.FrontLeftModule.kOffset
             ),
             new SwerveModule(
                 new TurnMotor(
@@ -50,7 +51,8 @@ public class DriveSubsystem extends SubsystemBase{
                 new DriveMotor(
                     DriveConstants.FrontRightModule.kDriveCANID, 
                     DriveConstants.FrontRightModule.kDriveInverted
-                )
+                ),
+                DriveConstants.FrontRightModule.kOffset
             ),
             new SwerveModule(
                 new TurnMotor(
@@ -62,7 +64,8 @@ public class DriveSubsystem extends SubsystemBase{
                 new DriveMotor(
                     DriveConstants.BackLeftModule.kDriveCANID, 
                     DriveConstants.BackLeftModule.kDriveInverted
-                )
+                ),
+                DriveConstants.BackLeftModule.kOffset
             ),
             new SwerveModule(
                 new TurnMotor(
@@ -74,7 +77,8 @@ public class DriveSubsystem extends SubsystemBase{
                 new DriveMotor(
                     DriveConstants.BackRightModule.kDriveCANID, 
                     DriveConstants.BackRightModule.kDriveInverted
-                )
+                ),
+                DriveConstants.BackRightModule.kOffset
             )
         );
 

@@ -20,14 +20,13 @@ import frc.robot.constants.DriveConstants.TurnMotorConstants;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 public class TurnMotor {
-
     private SparkFlex m_motor;
     private SparkClosedLoopController m_closedLoopController;
     private SparkAnalogSensor m_encoder;
     private String m_name;
-    private double m_offset;
+    private Rotation2d m_offset;
 
-    public TurnMotor (String name, int motorID, boolean inverted, double offset) {
+    public TurnMotor (String name, int motorID, boolean inverted, Rotation2d offset) {
         m_motor = new SparkFlex(motorID, MotorType.kBrushless);
         m_closedLoopController = m_motor.getClosedLoopController();
         m_encoder = m_motor.getAnalog();
@@ -39,10 +38,9 @@ public class TurnMotor {
         motorConfig
             .idleMode(IdleMode.kCoast)
             .smartCurrentLimit(TurnMotorConstants.kCurrentLimit);
-        motorConfig.absoluteEncoder
-            .zeroOffset(m_offset)
-            .positionConversionFactor(DriveConstants.EncoderConstants.kPositionConversionFactor.in(Units.Radians))
-            .velocityConversionFactor(1);
+        motorConfig.analogSensor
+            .positionConversionFactor(DriveConstants.TurnMotorConstants.kPositionConversionFactor.in(Units.Radians))
+            .velocityConversionFactor(DriveConstants.TurnMotorConstants.kVelocityConversionFactor.in(Units.RadiansPerSecond));
         motorConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kAnalogSensor)
             .pid(
@@ -52,13 +50,13 @@ public class TurnMotor {
             )
             .outputRange(-1, 1)
             .positionWrappingEnabled(true)
-            .positionWrappingInputRange(0, 5);
+            .positionWrappingInputRange(-Math.PI, Math.PI);
 
         m_motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Rotation2d getAngle(){
-        return Rotation2d.fromRadians(m_encoder.getPosition());
+        return Rotation2d.fromRadians(m_encoder.getPosition()).minus(m_offset);
     }
 
     public void setAngle(Rotation2d targetAngle){

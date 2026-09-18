@@ -15,10 +15,11 @@ public class SwerveModule {
 
     Rotation2d m_offset; //we use rotation2d bc that's what the swervemodulestate methods intake
     
-    public SwerveModule (TurnMotor turnMotor, DriveMotor driveMotor) {
-        
+    public SwerveModule (TurnMotor turnMotor, DriveMotor driveMotor, Rotation2d offset) {
         m_turnMotor = turnMotor;
         m_driveMotor = driveMotor;
+
+        m_offset = offset;
     }
 
     private Rotation2d angleRelativeToRobot(Rotation2d angle){

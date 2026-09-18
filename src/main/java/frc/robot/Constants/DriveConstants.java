@@ -8,7 +8,6 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.wpilibj.AnalogInput;
 
 public class DriveConstants {
     public static final LinearVelocity maxSpeed = Units.MetersPerSecond.of(10);
@@ -17,18 +16,14 @@ public class DriveConstants {
         public static final int kCanID = 10;
     }
 
-    public static final class EncoderConstants {
-        public static final Angle kPositionConversionFactor = Units.Radians.of(1.256637061); //converting from volts to radians (2pi/5)
-    }
-
     public static final class TurnMotorConstants{
         public static final int kCurrentLimit = 20;
 
-        public static final Angle kPositionConversionFactor = Units.Radians.of(0.24166); 
-        public static final AngularVelocity kVelocityConversionFactor = Units.RadiansPerSecond.of(0.24166);
+        public static final Angle kPositionConversionFactor = Units.Radians.of(2*Math.PI/5);
+        public static final AngularVelocity kVelocityConversionFactor = Units.RotationsPerSecond.of(2*Math.PI/5);
 
         public static final class PID {
-            public static final double kP = 0;
+            public static final double kP = 10;
             public static final double kI = 0;
             public static final double kD = 0;
         }
@@ -41,7 +36,7 @@ public class DriveConstants {
         public static final LinearVelocity kVelocityConversionFactor = Units.MetersPerSecond.of(0.05678);
 
         public static final class PID {
-            public static final double kP = 0;
+            public static final double kP = 0.1;
             public static final double kI = 0;
             public static final double kD = 0;
         }
@@ -50,47 +45,45 @@ public class DriveConstants {
 
     public static final class FrontLeftModule {
         public static final int kDriveCANID = 5;
-        public static final AnalogInput kAnalogInput = new AnalogInput(1);
         public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 6;
         public static final boolean kTurnInverted = false;
 
-        public static final double kOffset = 2.845;
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(204.84);
     }
     public static final class FrontRightModule {
         public static final int kDriveCANID = 3;
-        public static final AnalogInput kAnalogInput = new AnalogInput(3);
         public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 4;
         public static final boolean kTurnInverted = false;
 
-        public static final double kOffset = 3.865;
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(278.28);
     }
-    public static final class BackRightModule {
-        public static final int kDriveCANID = 1;
-        public static final AnalogInput kAnalogInput = new AnalogInput(2);
-        public static final boolean kDriveInverted = false;
 
-        public static final int kTurnCANID = 2;
-        public static final boolean kTurnInverted = false;
-
-        public static final double kOffset = 2.4927;
-    }
     public static final class BackLeftModule {
         public static final int kDriveCANID = 7;
-        public static final AnalogInput kAnalogInput = new AnalogInput(0);
         public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 8;
         public static final boolean kTurnInverted = false;
 
-        public static final double kOffset = 0.842;
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(60.624);
+    }
+
+    public static final class BackRightModule {
+        public static final int kDriveCANID = 1;
+        public static final boolean kDriveInverted = false;
+
+        public static final int kTurnCANID = 2;
+        public static final boolean kTurnInverted = false;
+
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(179.4744);
     }
 
     public static final class kBodyMeasures{
-        public static final Distance kWheelBase = Units.Inches.of(0);
+        public static final Distance kWheelBase = Units.Inches.of(21.25);
     }
 
     public static final SwerveDriveKinematics kKinematics = new SwerveDriveKinematics(
