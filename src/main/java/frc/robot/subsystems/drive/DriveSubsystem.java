@@ -151,6 +151,6 @@ public class DriveSubsystem extends SubsystemBase{
             SmartDashboard.putNumber(names[i] + "ActualVel", mod.getDriveSpeed().in(Units.MetersPerSecond));
         }
 
-        m_poser.update(new Rotation2d(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
+        m_poser.update(Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
     }
 }

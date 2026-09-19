@@ -37,7 +37,7 @@ public class SwerveModule {
 
         m_lastCommanded = targetModuleState;
         m_turnMotor.setAngle(targetModuleState.angle);
-        m_driveMotor.setVelocity(Units.MetersPerSecond.of(targetModuleState.speedMetersPerSecond));
+        m_driveMotor.setOpenLoop(Units.MetersPerSecond.of(targetModuleState.speedMetersPerSecond));
     }
 
     public SwerveModuleState getState() {

@@ -56,6 +56,13 @@ public class DriveMotor {
         return Units.Meters.of(m_encoder.getPosition());
     }
 
+    //teleop drives open loop: duty cycle scaled by the same max speed the kinematics
+    //desaturate against, so a full-stick module request maps to full output
+    public void setOpenLoop(LinearVelocity commandedVelocity){
+        m_motor.set(commandedVelocity.in(Units.MetersPerSecond)
+            / DriveConstants.maxSpeed.in(Units.MetersPerSecond));
+    }
+
     public void setVelocity(LinearVelocity commandedVelocity){
         m_closedLoopController.setSetpoint(commandedVelocity.in(Units.MetersPerSecond), ControlType.kVelocity);
     }
