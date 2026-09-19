@@ -29,7 +29,7 @@ public class DriveCommand extends Command {
         m_drive.driveFieldRelative(new ChassisSpeeds(
             m_xVel.getAsDouble() * DriveConstants.kMaxSpeed.in(Units.MetersPerSecond),
             m_yVel.getAsDouble() * DriveConstants.kMaxSpeed.in(Units.MetersPerSecond),
-            m_rotVel.getAsDouble() * DriveConstants.kMaxAngularSpeed.in(Units.RadiansPerSecond)));
+            m_rotVel.getAsDouble() * DriveConstants.kTeleopMaxAngularSpeed.in(Units.RadiansPerSecond)));
     }
 
     @Override

@@ -13,13 +13,13 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public class DriveConstants {
 
     public static final class GyroscopeConstants {
-        public static final int kCanID = 0; //TODO double check this in Tuner X
+        public static final int kCanID = 10; //verified in Tuner X
     }
 
     public static final class kBodyMeasures {
-        //TODO measure these center of wheel to center of wheel, the drivetrain WILL NOT rotate right while they're 0
-        public static final Distance kWheelBase = Units.Inches.of(0);  //front to back
-        public static final Distance kTrackWidth = Units.Inches.of(0); //left to right
+        //center of wheel to center of wheel. these MUST be nonzero: kDriveBaseRadius divides by them
+        public static final Distance kWheelBase = Units.Inches.of(21.25);  //front to back
+        public static final Distance kTrackWidth = Units.Inches.of(21.25); //left to right, square chassis
 
         //nominal 4in, replace with the output of the wheel radius characterization
         public static final Distance kWheelRadius = Units.Inches.of(2.0);
@@ -49,7 +49,10 @@ public class DriveConstants {
         public static final double kMotorVelocityConversionFactor = kMotorPositionConversionFactor / 60.0;
 
         public static final class PID { //from turn sysid (position loop, radians)
-            public static final double kP = 0;
+            //placeholder from studentDriver's working loop. that loop ran on the analog sensor but its
+            //feedback was also module radians, so kP carries over. stiff (~0.6deg error saturates output).
+            //TODO replace with the real turn sysid result
+            public static final double kP = 100;
             public static final double kI = 0;
             public static final double kD = 0;
         }
@@ -74,7 +77,9 @@ public class DriveConstants {
 
         public static final class Feedforward { //from drive sysid, volts / volts per m/s
             public static final double kS = 0;
-            public static final double kV = 0;
+            //stopgap so setVelocity does something before drive sysid runs: 12V / ~6.85 m/s free speed.
+            //TODO replace with the real drive sysid result
+            public static final double kV = 1.75;
         }
     }
 
@@ -109,6 +114,10 @@ public class DriveConstants {
     public static final AngularVelocity kMaxAngularSpeed = Units.RadiansPerSecond.of(
         kMaxSpeed.in(Units.MetersPerSecond) / kBodyMeasures.kDriveBaseRadius.in(Units.Meters));
 
+    //what full right stick asks for in teleop. the kinematic max above is ~2.9 rev/s, which is way more
+    //than a driver can use. 1 rev/s is what studentDriver ran. purely feel, turn it up if they want it.
+    public static final AngularVelocity kTeleopMaxAngularSpeed = Units.RadiansPerSecond.of(2 * Math.PI);
+
     //module offsets: point the wheel straight forward (bevel gears all facing the same side) and copy
     //Drive/<module>/Raw Absolute Angle Deg from the dashboard
     public static final class FrontLeftModule {
@@ -118,16 +127,16 @@ public class DriveConstants {
         public static final int kTurnCANID = 6;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(204.84); //was 2.845V
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(205.978); //re-zeroed on studentDriver, 3.595 rad
     }
     public static final class FrontRightModule {
         public static final int kDriveCANID = 3;
-        public static final boolean kDriveInverted = false;
+        public static final boolean kDriveInverted = true; //right side modules are mirrored
 
         public static final int kTurnCANID = 4;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(278.28); //was 3.865V
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(283.901); //re-zeroed on studentDriver, 4.955 rad
     }
     public static final class BackLeftModule {
         public static final int kDriveCANID = 7;
@@ -136,16 +145,16 @@ public class DriveConstants {
         public static final int kTurnCANID = 8;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(60.624); //was 0.842V
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(59.301); //re-zeroed on studentDriver, 1.035 rad
     }
     public static final class BackRightModule {
         public static final int kDriveCANID = 1;
-        public static final boolean kDriveInverted = false;
+        public static final boolean kDriveInverted = true; //right side modules are mirrored
 
         public static final int kTurnCANID = 2;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(179.4744); //was 2.4927V
+        public static final Rotation2d kOffset = Rotation2d.fromDegrees(178.419); //re-zeroed on studentDriver, 3.114 rad
     }
 
     //order everywhere is FL, FR, BL, BR
