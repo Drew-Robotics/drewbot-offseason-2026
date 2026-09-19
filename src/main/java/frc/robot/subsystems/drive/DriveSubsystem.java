@@ -142,6 +142,15 @@ public class DriveSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("BL ENC", m_swerveModules.get(2).m_turnMotor.getAngle().getDegrees());
         SmartDashboard.putNumber("BR ENC", m_swerveModules.get(3).m_turnMotor.getAngle().getDegrees());
 
+        String[] names = {"FL","FR","BL","BR"};
+        SmartDashboard.putNumber("GyroYawDeg", m_gyro.getYaw().getValueAsDouble());
+        for(int i = 0; i < 4; i++){
+            SwerveModule mod = m_swerveModules.get(i);
+            SmartDashboard.putNumber(names[i] + "CmdSpeed", mod.getLastCommanded().speedMetersPerSecond);
+            SmartDashboard.putNumber(names[i] + "CmdAngle", mod.getLastCommanded().angle.getRadians());
+            SmartDashboard.putNumber(names[i] + "ActualVel", mod.getDriveSpeed().in(Units.MetersPerSecond));
+        }
+
         m_poser.update(new Rotation2d(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
     }
 }

@@ -36,13 +36,14 @@ public class DriveMotor {
 
         motorConfig
             .idleMode(IdleMode.kBrake)
-            .smartCurrentLimit(60);
+            .smartCurrentLimit(60)
+            .inverted(inverted);
         motorConfig.encoder
             .positionConversionFactor(DriveConstants.DriveMotorConstants.kPositionConversionFactor.in(Units.Meters))
             .velocityConversionFactor(DriveConstants.DriveMotorConstants.kVelocityConversionFactor.in(Units.MetersPerSecond));
         motorConfig.closedLoop
             .pid(DriveMotorConstants.PID.kP, DriveMotorConstants.PID.kI, DriveMotorConstants.PID.kD)
-            .feedbackSensor(FeedbackSensor.kAlternateOrExternalEncoder)
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .outputRange(-1, 1);
 
         m_motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

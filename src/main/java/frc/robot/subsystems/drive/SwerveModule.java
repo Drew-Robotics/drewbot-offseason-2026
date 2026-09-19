@@ -15,19 +15,13 @@ public class SwerveModule {
 
     Rotation2d m_offset; //we use rotation2d bc that's what the swervemodulestate methods intake
     
+    private SwerveModuleState m_lastCommanded = new SwerveModuleState();
+
     public SwerveModule (TurnMotor turnMotor, DriveMotor driveMotor, Rotation2d offset) {
         m_turnMotor = turnMotor;
         m_driveMotor = driveMotor;
 
         m_offset = offset;
-    }
-
-    private Rotation2d angleRelativeToRobot(Rotation2d angle){
-        return angle.minus(m_offset);
-    }
-
-    private Rotation2d angleRelativeToModule(Rotation2d angle){ //just like resets an angle that's already relative to the robot
-        return angle.plus(m_offset);
     }
 
     //PUBLIC METHODS:
@@ -36,21 +30,22 @@ public class SwerveModule {
     public void setState(SwerveModuleState moduleState){
         SwerveModuleState targetModuleState = new SwerveModuleState(
             moduleState.speedMetersPerSecond, 
-            angleRelativeToModule(moduleState.angle)
+            moduleState.angle
             );
         
         targetModuleState.optimize(m_turnMotor.getAngle());
 
+        m_lastCommanded = targetModuleState;
         m_turnMotor.setAngle(targetModuleState.angle);
         m_driveMotor.setVelocity(Units.MetersPerSecond.of(targetModuleState.speedMetersPerSecond));
     }
 
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getDriveSpeed(), angleRelativeToRobot(m_turnMotor.getAngle()));
+        return new SwerveModuleState(getDriveSpeed(), m_turnMotor.getAngle());
     }
 
     public SwerveModulePosition getPosition() {
-        return new SwerveModulePosition(getDistance(), angleRelativeToRobot(m_turnMotor.getAngle()));
+        return new SwerveModulePosition(getDistance(), m_turnMotor.getAngle());
     }
 
     public LinearVelocity getDriveSpeed() {
@@ -59,6 +54,10 @@ public class SwerveModule {
 
     public Distance getDistance() {
         return m_driveMotor.getPosition();
+    }
+
+    public SwerveModuleState getLastCommanded(){
+        return m_lastCommanded;
     }
 
     public Rotation2d getAbsoluteAngle(){
