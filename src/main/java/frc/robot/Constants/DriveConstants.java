@@ -10,7 +10,7 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 
 public class DriveConstants {
-    public static final LinearVelocity maxSpeed = Units.MetersPerSecond.of(10);
+    public static final LinearVelocity maxSpeed = Units.FeetPerSecond.of(25);
 
     public static final class GyroscopeConstants {
         public static final int kCanID = 10;
@@ -23,7 +23,7 @@ public class DriveConstants {
         public static final AngularVelocity kVelocityConversionFactor = Units.RotationsPerSecond.of(2*Math.PI/5);
 
         public static final class PID {
-            public static final double kP = 10;
+            public static final double kP = 0.1;
             public static final double kI = 0;
             public static final double kD = 0;
         }
@@ -48,18 +48,18 @@ public class DriveConstants {
         public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 6;
-        public static final boolean kTurnInverted = false;
+        public static final boolean kTurnInverted = true;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(204.84);
+        public static final Rotation2d kOffset = Rotation2d.fromRadians(3.56);
     }
     public static final class FrontRightModule {
         public static final int kDriveCANID = 3;
-        public static final boolean kDriveInverted = false;
+        public static final boolean kDriveInverted = true;
 
         public static final int kTurnCANID = 4;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(278.28);
+        public static final Rotation2d kOffset = Rotation2d.fromRadians(4.90);
     }
 
     public static final class BackLeftModule {
@@ -67,9 +67,9 @@ public class DriveConstants {
         public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 8;
-        public static final boolean kTurnInverted = false;
+        public static final boolean kTurnInverted = true;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(60.624);
+        public static final Rotation2d kOffset = Rotation2d.fromRadians(1.06);
     }
 
     public static final class BackRightModule {
@@ -77,9 +77,9 @@ public class DriveConstants {
         public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 2;
-        public static final boolean kTurnInverted = false;
+        public static final boolean kTurnInverted = true;
 
-        public static final Rotation2d kOffset = Rotation2d.fromDegrees(179.4744);
+        public static final Rotation2d kOffset = Rotation2d.fromRadians(3.13);
     }
 
     public static final class kBodyMeasures{

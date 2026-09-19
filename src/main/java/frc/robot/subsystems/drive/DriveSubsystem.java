@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.fasterxml.jackson.databind.util.RootNameLookup;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -83,6 +84,7 @@ public class DriveSubsystem extends SubsystemBase{
         );
 
         m_gyro = new Pigeon2(DriveConstants.GyroscopeConstants.kCanID);
+        m_gyro.setYaw(0);
 
         m_poser = new SwerveDrivePoseEstimator(
             DriveConstants.kKinematics, 
@@ -119,7 +121,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void fieldOrientedDrive(LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
         ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rotVel.in(Units.RadiansPerSecond));
-        speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, m_gyro.getRotation2d());
+        speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()));
         setChassisSpeed(speeds);
     }
 

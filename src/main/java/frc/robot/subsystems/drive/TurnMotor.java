@@ -36,8 +36,9 @@ public class TurnMotor {
         SparkFlexConfig motorConfig = new SparkFlexConfig();
 
         motorConfig
-            .idleMode(IdleMode.kCoast)
-            .smartCurrentLimit(TurnMotorConstants.kCurrentLimit);
+            .idleMode(IdleMode.kBrake)
+            .smartCurrentLimit(TurnMotorConstants.kCurrentLimit)
+            .inverted(inverted);
         motorConfig.analogSensor
             .positionConversionFactor(DriveConstants.TurnMotorConstants.kPositionConversionFactor.in(Units.Radians))
             .velocityConversionFactor(DriveConstants.TurnMotorConstants.kVelocityConversionFactor.in(Units.RadiansPerSecond));
@@ -69,5 +70,8 @@ public class TurnMotor {
 
     public void periodic() {
         SmartDashboard.putNumber(m_name + " Encoder" , encoderVoltageCheck());
+        SmartDashboard.putNumber(m_name + "TargetAngle", m_closedLoopController.getSetpoint());
+        SmartDashboard.putNumber(m_name + "RawAngle", m_encoder.getPosition());
+        SmartDashboard.putNumber(m_name + "Angle", getAngle().getRadians());
     }
 }

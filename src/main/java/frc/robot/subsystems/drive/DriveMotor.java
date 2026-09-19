@@ -35,8 +35,8 @@ public class DriveMotor {
         SparkFlexConfig motorConfig = new SparkFlexConfig();
 
         motorConfig
-            .idleMode(IdleMode.kCoast)
-            .smartCurrentLimit(0);
+            .idleMode(IdleMode.kBrake)
+            .smartCurrentLimit(60);
         motorConfig.encoder
             .positionConversionFactor(DriveConstants.DriveMotorConstants.kPositionConversionFactor.in(Units.Meters))
             .velocityConversionFactor(DriveConstants.DriveMotorConstants.kVelocityConversionFactor.in(Units.MetersPerSecond));

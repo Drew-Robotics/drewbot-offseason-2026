@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class DriveCommand extends Command {
@@ -24,9 +24,9 @@ public class DriveCommand extends Command {
 
     public void execute() {
         DriveSubsystem.getInstance().fieldOrientedDrive(
-            Units.MetersPerSecond.of(m_xVel.getAsDouble()), 
-            Units.MetersPerSecond.of(m_yVel.getAsDouble()), 
-            Units.RadiansPerSecond.of(m_rotVel.getAsDouble()));
+            Units.MetersPerSecond.of(m_xVel.getAsDouble()*DriveConstants.maxSpeed.in(Units.MetersPerSecond)), 
+            Units.MetersPerSecond.of(m_yVel.getAsDouble()*DriveConstants.maxSpeed.in(Units.MetersPerSecond)), 
+            Units.RadiansPerSecond.of(m_rotVel.getAsDouble()*2*Math.PI));
     }
 
     public void end() {}
