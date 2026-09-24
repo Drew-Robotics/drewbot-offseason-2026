@@ -49,8 +49,11 @@ public class Camera {
             m_latestResult.isPresent() ? m_poser.estimateLowestAmbiguityPose(m_latestResult.get()) : Optional.empty();
     }
 
-    private Optional<Vector<N3>> getStandardDeviations (Pose2d robotPose) {
-        List<Double> distances = getSeenAprilTags().stream().map(tag -> distanceToTag(tag, robotPose).in(Units.Meters)).toList();
+    public Optional<Vector<N3>> getStandardDeviation (Pose2d robotPose) {
+        List<Double> distances = getSeenAprilTags().stream()
+            .map(tag -> VisionSubsystem.distanceToTag(tag, robotPose)
+                .in(Units.Meters))
+            .toList(); 
 
         if(distances.isEmpty()){
             return Optional.empty();
@@ -80,18 +83,9 @@ public class Camera {
             .toList();
     }
 
-    public Distance distanceToTag (AprilTag tag, Pose2d robotPose){
-        return Units.Meters.of(tag.pose
-            .getTranslation()
-            .toTranslation2d()
-            .getDistance(robotPose.getTranslation())); //MAYBE SHOULDN'T BE METERS IDK I'M LOWK GUESSING    hindsight I'm like 85% sure I was right but still leaving this here
-    }
-
     public Optional<EstimatedRobotPose> getPoseEstimation () {
         Optional<EstimatedRobotPose> p = m_latestPoseEstimation;
         m_latestPoseEstimation = Optional.empty();
         return p;
     }
-    //next we need getPoseEstimation and the little scraps at the end to make it a complete function
-
 }//to any freshmen reading this file I apologize greatly for my comment standards

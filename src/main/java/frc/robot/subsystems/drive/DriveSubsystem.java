@@ -19,6 +19,8 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DriveConstants;
+import frc.robot.subsystems.vision.Camera;
+import frc.robot.subsystems.vision.VisionSubsystem;
 
 public class DriveSubsystem extends SubsystemBase{
     private final List<SwerveModule> m_swerveModules;
@@ -152,5 +154,16 @@ public class DriveSubsystem extends SubsystemBase{
         }
 
         m_poser.update(Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
+    }
+
+    private void poseVisionIncorporation() {
+        List<Camera> cams = VisionSubsystem.getInstance().getCameras();
+
+        for(Camera cam : cams) {
+            m_poser.addVisionMeasurement(
+                cam.getPoseEstimation().get().estimatedPose.toPose2d(), 
+                cam.getPoseEstimation().get().timestampSeconds,
+                cam.getStandardDeviation(getPose()).get());
+        }
     }
 }
