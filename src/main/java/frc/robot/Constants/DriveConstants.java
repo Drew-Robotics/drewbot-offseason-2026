@@ -17,13 +17,14 @@ public class DriveConstants {
     }
 
     public static final class TurnMotorConstants{
-        public static final int kCurrentLimit = 20;
+        public static final int kCurrentLimit = 60; //matches the CTRE swerve template steer stator limit
 
         public static final Angle kPositionConversionFactor = Units.Radians.of(2*Math.PI/5);
-        public static final AngularVelocity kVelocityConversionFactor = Units.RotationsPerSecond.of(2*Math.PI/5);
+        //analog native velocity is V/s, so this is rad/s per V/s (was RotationsPerSecond, which .in(RadiansPerSecond) inflated by 2pi)
+        public static final AngularVelocity kVelocityConversionFactor = Units.RadiansPerSecond.of(2*Math.PI/5);
 
         public static final class PID {
-            public static final double kP = 100;
+            public static final double kP = 1.5; //duty per module radian. CTRE template kP 100 is V per rotation, ~1.5 here
             public static final double kI = 0;
             public static final double kD = 0;
         }
