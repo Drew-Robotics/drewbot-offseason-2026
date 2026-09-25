@@ -30,7 +30,7 @@ public class DriveConstants {
     }
 
     public static final class TurnMotorConstants {
-        public static final int kCurrentLimit = 20;
+        public static final int kCurrentLimit = 60; //matches the CTRE swerve template steer stator limit
         public static final IdleMode kIdleMode = IdleMode.kBrake;
 
         public static final double kGearRatio = 26.0; //MK5i steering is 26:1
@@ -49,10 +49,10 @@ public class DriveConstants {
         public static final double kMotorVelocityConversionFactor = kMotorPositionConversionFactor / 60.0;
 
         public static final class PID { //from turn sysid (position loop, radians)
-            //placeholder from studentDriver's working loop. that loop ran on the analog sensor but its
-            //feedback was also module radians, so kP carries over. stiff (~0.6deg error saturates output).
+            //duty per module radian. the old 100 matches the CTRE template's steer kP, but theirs is volts
+            //per rotation, so 100 here was ~65x hotter. ~1.5 is the CTRE equivalent for a 26:1 vortex.
             //TODO replace with the real turn sysid result
-            public static final double kP = 100;
+            public static final double kP = 1.5;
             public static final double kI = 0;
             public static final double kD = 0;
         }
