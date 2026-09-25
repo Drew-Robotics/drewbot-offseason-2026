@@ -5,12 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.controller.DriverController;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.TurnTuneCommand;
 import frc.robot.constants.MiscConstants;
 
 public class RobotContainer {
@@ -29,6 +31,9 @@ public class RobotContainer {
         m_driverController::getDriveRot
       )
     );
+
+    //toggle from the dashboard to live tune a turn motor, see TurnTuneCommand for the NT keys
+    SmartDashboard.putData("TurnTuning/Run", new TurnTuneCommand());
   }
 
   public Command getAutonomousCommand() {

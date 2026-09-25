@@ -71,6 +71,40 @@ public class TurnMotor {
         m_closedLoopController.setSetpoint(rawTarget, ControlType.kPosition);
     }
 
+    //the rest of these read straight off the flex so the dashboard shows what the
+    //controller is actually running, not what we think we sent it
+
+    public Rotation2d getTargetAngle(){
+        return Rotation2d.fromRadians(m_closedLoopController.getSetpoint()).minus(m_offset);
+    }
+
+    //live tuning only: don't reset or persist, so a power cycle falls back to the constants
+    public void setPID(double p, double i, double d){
+        SparkFlexConfig pidConfig = new SparkFlexConfig();
+        pidConfig.closedLoop.pid(p, i, d);
+        m_motor.configure(pidConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+
+    public double getP(){
+        return m_motor.configAccessor.closedLoop.getP();
+    }
+
+    public double getI(){
+        return m_motor.configAccessor.closedLoop.getI();
+    }
+
+    public double getD(){
+        return m_motor.configAccessor.closedLoop.getD();
+    }
+
+    public double getAppliedOutput(){
+        return m_motor.getAppliedOutput();
+    }
+
+    public double getOutputCurrent(){
+        return m_motor.getOutputCurrent();
+    }
+
     public double encoderVoltageCheck() {
         return m_encoder.getVoltage();
     }

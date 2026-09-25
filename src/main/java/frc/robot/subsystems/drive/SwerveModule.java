@@ -64,6 +64,20 @@ public class SwerveModule {
         return m_turnMotor.getAngle();
     }
 
+    //skips optimize() so the turn motor goes exactly where it's told, for tuning
+    public void setTurnAngleDirect(Rotation2d angle){
+        m_turnMotor.setAngle(angle);
+        m_driveMotor.setOpenLoop(Units.MetersPerSecond.of(0));
+    }
+
+    public void stopDrive(){
+        m_driveMotor.setOpenLoop(Units.MetersPerSecond.of(0));
+    }
+
+    public TurnMotor getTurnMotor(){
+        return m_turnMotor;
+    }
+
     public void encoderVoltageCheck(){
         m_turnMotor.encoderVoltageCheck();
     }

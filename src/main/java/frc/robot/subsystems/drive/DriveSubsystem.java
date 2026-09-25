@@ -127,6 +127,11 @@ public class DriveSubsystem extends SubsystemBase{
         setChassisSpeed(speeds);
     }
 
+    //index order is fl fr bl br, same as everywhere else
+    public SwerveModule getModule(int index){
+        return m_swerveModules.get(index);
+    }
+
     public Pose2d getPose () {
         return m_poser.getEstimatedPosition();
     }
