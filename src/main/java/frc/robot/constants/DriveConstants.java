@@ -59,7 +59,7 @@ public class DriveConstants {
     }
 
     public static final class DriveMotorConstants {
-        public static final int kCurrentLimit = 40;
+        public static final int kCurrentLimit = 60; //what studentDriver/camera actually ran (hardcoded there, its 40 constant was unused)
         public static final IdleMode kIdleMode = IdleMode.kBrake;
 
         public static final double kGearRatio = 5.27; //MK5i R3, TODO verify against the SDS drawing
