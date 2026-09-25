@@ -33,9 +33,14 @@ public class DriveConstants {
     public static final class DriveMotorConstants{
         public static final int kCurrentLimit = 40;
 
-        public static final Distance kPositionConversionFactor = Units.Meters.of(0.05678);
+        public static final Distance kWheelDiameter = Units.Inches.of(4);
+        public static final double kGearRatio = 5.27; //MK5i R3, same assumption as main. TODO verify (old 0.05678 implied 5.62)
+
+        //motor rotations -> meters of wheel travel
+        public static final Distance kPositionConversionFactor = kWheelDiameter.times(Math.PI).div(kGearRatio);
         //native velocity is RPM, so it's the position factor per minute
-        public static final LinearVelocity kVelocityConversionFactor = Units.MetersPerSecond.of(0.05678/60);
+        public static final LinearVelocity kVelocityConversionFactor =
+            Units.MetersPerSecond.of(kPositionConversionFactor.in(Units.Meters) / 60);
 
         public static final class PID {
             public static final double kP = 0.1;
