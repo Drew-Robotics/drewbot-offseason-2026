@@ -3,13 +3,12 @@ package frc.robot.subsystems.vision;
 import java.util.List;
 import java.util.Optional;
 
-import org.photonvision.EstimatedRobotPose;
-
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.drive.DriveSubsystem;
 
 public class VisionSubsystem extends SubsystemBase{
@@ -18,7 +17,10 @@ public class VisionSubsystem extends SubsystemBase{
     private static VisionSubsystem m_instance;
 
     public VisionSubsystem() {
-        m_cameras = List.of();
+        m_cameras = List.of(
+            new Camera("FR", VisionConstants.cameraTransformations.kFRTransformation, VisionConstants.kAprilTagLayout),
+            new Camera("BL", VisionConstants.cameraTransformations.kBLTransformation, VisionConstants.kAprilTagLayout)
+        );
     }
 
     public static VisionSubsystem getInstance(){
@@ -67,7 +69,20 @@ public class VisionSubsystem extends SubsystemBase{
     //         .toList();
     // }
 
-    public List<Camera> getCameras () {
+    public List<Camera> getCameras() {
         return m_cameras;
+    }
+
+    private void updateCameras() {
+        for(Camera cam : m_cameras){
+            cam.updateLatestResults();
+            cam.updatePose();
+        }
+    }
+
+    @Override
+    public void periodic(){
+        super.periodic();
+        updateCameras();
     }
 }

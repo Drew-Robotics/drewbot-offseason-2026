@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.fasterxml.jackson.databind.util.RootNameLookup;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -136,6 +135,18 @@ public class DriveSubsystem extends SubsystemBase{
         return m_poser.getEstimatedPosition();
     }
 
+    private void poseVisionIncorporation() {
+        List<Camera> cams = VisionSubsystem.getInstance().getCameras();
+
+        for(Camera cam : cams) {
+            if(cam.getPoseEstimation().isEmpty()==false){
+                m_poser.addVisionMeasurement(
+                    cam.getPoseEstimation().get().estimatedPose.toPose2d(), 
+                    cam.getPoseEstimation().get().timestampSeconds,
+                    cam.getStandardDeviation(getPose()).get());
+            }
+        }
+    }
 
     @Override
     public void periodic(){
@@ -159,16 +170,6 @@ public class DriveSubsystem extends SubsystemBase{
         }
 
         m_poser.update(Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
-    }
-
-    private void poseVisionIncorporation() {
-        List<Camera> cams = VisionSubsystem.getInstance().getCameras();
-
-        for(Camera cam : cams) {
-            m_poser.addVisionMeasurement(
-                cam.getPoseEstimation().get().estimatedPose.toPose2d(), 
-                cam.getPoseEstimation().get().timestampSeconds,
-                cam.getStandardDeviation(getPose()).get());
-        }
+        poseVisionIncorporation();
     }
 }

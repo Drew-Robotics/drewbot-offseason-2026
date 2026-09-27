@@ -3,7 +3,6 @@ package frc.robot.subsystems.vision;
 import java.util.List;
 import java.util.Optional;
 
-import org.opencv.core.Mat.Tuple2;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -18,7 +17,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.units.measure.Distance;
 import frc.robot.constants.VisionConstants;
 import frc.robot.constants.VisionConstants.StandardDeviations;
 
@@ -39,12 +37,17 @@ public class Camera {
         m_standardDeviation = Optional.empty();
     }
 
-    private void updateLatestResults() {
+    public void updateLatestResults() {
         // m_latestResult = m_camera.getAllUnreadResults().stream().findFirst();
-        m_latestResult = Optional.of(m_camera.getAllUnreadResults().get(0));
+        if(m_camera.getAllUnreadResults().size()>0){
+            m_latestResult = Optional.of(m_camera.getAllUnreadResults().get(0));
+        }
+        else {
+            m_latestResult = Optional.empty();
+        }
     }
 
-    private void updatePose() {
+    public void updatePose() {
         m_latestPoseEstimation =
             m_latestResult.isPresent() ? m_poser.estimateLowestAmbiguityPose(m_latestResult.get()) : Optional.empty();
     }
