@@ -24,9 +24,9 @@ public class DriveCommand extends Command {
 
     public void execute() {
         DriveSubsystem.getInstance().fieldOrientedDrive(
-            Units.MetersPerSecond.of(m_xVel.getAsDouble()*DriveConstants.maxSpeed.in(Units.MetersPerSecond)), 
-            Units.MetersPerSecond.of(m_yVel.getAsDouble()*DriveConstants.maxSpeed.in(Units.MetersPerSecond)), 
-            Units.RadiansPerSecond.of(m_rotVel.getAsDouble()*2*Math.PI));
+            Units.MetersPerSecond.of(m_xVel.getAsDouble()*DriveConstants.kMaxVel.in(Units.MetersPerSecond)), //diagonals go above max speed bc its not on a vector
+            Units.MetersPerSecond.of(m_yVel.getAsDouble()*DriveConstants.kMaxVel.in(Units.MetersPerSecond)), 
+            Units.RadiansPerSecond.of(m_rotVel.getAsDouble()*DriveConstants.kMaxRotVel.in(Units.RadiansPerSecond)));
     }
 
     public void end() {}

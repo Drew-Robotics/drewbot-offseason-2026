@@ -60,7 +60,7 @@ public class DriveMotor {
     //desaturate against, so a full-stick module request maps to full output
     public void setOpenLoop(LinearVelocity commandedVelocity){
         m_motor.set(commandedVelocity.in(Units.MetersPerSecond)
-            / DriveConstants.maxSpeed.in(Units.MetersPerSecond));
+            / DriveConstants.kMaxVel.in(Units.MetersPerSecond));
     }
 
     public void setVelocity(LinearVelocity commandedVelocity){

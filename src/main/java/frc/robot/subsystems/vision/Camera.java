@@ -38,13 +38,13 @@ public class Camera {
     }
 
     public void updateLatestResults() {
-        // m_latestResult = m_camera.getAllUnreadResults().stream().findFirst();
-        if(m_camera.getAllUnreadResults().size()>0){
-            m_latestResult = Optional.of(m_camera.getAllUnreadResults().get(0));
-        }
-        else {
-            m_latestResult = Optional.empty();
-        }
+        m_latestResult = m_camera.getAllUnreadResults().stream().findFirst();
+        // if(m_camera.getAllUnreadResults().size()>0){
+        //     m_latestResult = Optional.of(m_camera.getAllUnreadResults().get(0));
+        // }
+        // else {
+        //     m_latestResult = Optional.empty();
+        // }
     }
 
     public void updatePose() {

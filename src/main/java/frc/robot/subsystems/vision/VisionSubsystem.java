@@ -18,8 +18,8 @@ public class VisionSubsystem extends SubsystemBase{
 
     public VisionSubsystem() {
         m_cameras = List.of(
-            new Camera("FR", VisionConstants.cameraTransformations.kFRTransformation, VisionConstants.kAprilTagLayout),
-            new Camera("BL", VisionConstants.cameraTransformations.kBLTransformation, VisionConstants.kAprilTagLayout)
+            new Camera("backLeft", VisionConstants.cameraTransformations.kFRTransformation, VisionConstants.kAprilTagLayout),
+            new Camera("backRight", VisionConstants.cameraTransformations.kBLTransformation, VisionConstants.kAprilTagLayout)
         );
     }
 

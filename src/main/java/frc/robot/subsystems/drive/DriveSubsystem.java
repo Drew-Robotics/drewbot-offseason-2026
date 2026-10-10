@@ -2,9 +2,11 @@ package frc.robot.subsystems.drive;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -25,6 +27,8 @@ public class DriveSubsystem extends SubsystemBase{
     private final List<SwerveModule> m_swerveModules;
     private final Pigeon2 m_gyro;
     private final SwerveDrivePoseEstimator m_poser;
+
+    private final PIDController m_turnPid;
 
     private static DriveSubsystem m_instance;
 
@@ -92,6 +96,8 @@ public class DriveSubsystem extends SubsystemBase{
             Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()), 
             getModulePositions(), 
             new Pose2d());  
+        
+        m_turnPid = new PIDController(0.1, 0, 0);
     }
 
     public static final DriveSubsystem getInstance() {
@@ -115,15 +121,29 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void setChassisSpeed(ChassisSpeeds speeds){
         SwerveModuleState[] states = DriveConstants.kKinematics.toSwerveModuleStates(speeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.kMaxVel);
         List<SwerveModuleState> statesList = Arrays.asList(states);
         setSwerveModuleStates(statesList);
     }
 
     public void fieldOrientedDrive(LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
-        ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rotVel.in(Units.RadiansPerSecond));
+        AngularVelocity rv;
+        // if(!rotVel.isEmpty()) {
+            // rv = rotVel.get();
+        // }
+        // else if(!rot.isEmpty()) {
+        //     rv = Units.RadiansPerSecond.of(m_turnPid.calculate(m_gyro.getRotation2d().getRadians(), rot.get().getRadians()));
+        // }
+        // else {
+        //     rv = Units.RadiansPerSecond.of(0);
+        // }
+        rv = rotVel;
+
+        ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rv.in(Units.RadiansPerSecond));
         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()));
         setChassisSpeed(speeds);
+        System.out.println("runnning");
+        SmartDashboard.putNumber("rotVel", rv.in(Units.RadiansPerSecond));
     }
 
     //index order is fl fr bl br, same as everywhere else
@@ -139,7 +159,7 @@ public class DriveSubsystem extends SubsystemBase{
         List<Camera> cams = VisionSubsystem.getInstance().getCameras();
 
         for(Camera cam : cams) {
-            if(cam.getPoseEstimation().isEmpty()==false){
+            if(!cam.getPoseEstimation().isEmpty()){
                 m_poser.addVisionMeasurement(
                     cam.getPoseEstimation().get().estimatedPose.toPose2d(), 
                     cam.getPoseEstimation().get().timestampSeconds,
@@ -170,6 +190,6 @@ public class DriveSubsystem extends SubsystemBase{
         }
 
         m_poser.update(Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()), getModulePositions());
-        poseVisionIncorporation();
+        //poseVisionIncorporation();
     }
 }

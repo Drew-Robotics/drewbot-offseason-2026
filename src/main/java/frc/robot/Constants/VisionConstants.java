@@ -39,8 +39,8 @@ public class VisionConstants {
 
         public static final Transform3d kFRTransformation = new Transform3d(
             new Translation3d(
-                DriveConstants.kBodyMeasures.kWheelBase.plus(wheelToCamera.x),
-                DriveConstants.kBodyMeasures.kWheelBase.plus(wheelToCamera.y),
+                DriveConstants.kBodyMeasures.kWheelBase.div(2).plus(wheelToCamera.x),
+                DriveConstants.kBodyMeasures.kWheelBase.div(2).plus(wheelToCamera.y),
                 wheelToCamera.z
             ),
             new Rotation3d(kRoll.in(Units.Degrees), kPitch.in(Units.Degrees), kFRYaw.in(Units.Degrees))
@@ -48,8 +48,8 @@ public class VisionConstants {
 
         public static final Transform3d kBLTransformation = new Transform3d(
             new Translation3d(
-                DriveConstants.kBodyMeasures.kWheelBase.plus(wheelToCamera.x).times(-1),
-                DriveConstants.kBodyMeasures.kWheelBase.plus(wheelToCamera.y).times(-1),
+                DriveConstants.kBodyMeasures.kWheelBase.div(2).plus(wheelToCamera.x).times(-1),
+                DriveConstants.kBodyMeasures.kWheelBase.div(2).plus(wheelToCamera.y).times(-1),
                 wheelToCamera.z
             ),
             new Rotation3d(kRoll.in(Units.Degrees), kPitch.in(Units.Degrees), kBLYaw.in(Units.Degrees))
