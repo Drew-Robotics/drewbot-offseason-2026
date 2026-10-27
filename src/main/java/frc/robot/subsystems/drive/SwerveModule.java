@@ -8,16 +8,18 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 
 public class SwerveModule {
-    String m_name;
+    private String m_name;
 
-    TurnMotor m_turnMotor;
-    DriveMotor m_driveMotor;
+    private final TurnMotor m_turnMotor;
+    private final DriveMotor m_driveMotor;
 
     Rotation2d m_offset; //we use rotation2d bc that's what the swervemodulestate methods intake
     
     private SwerveModuleState m_lastCommanded = new SwerveModuleState();
 
-    public SwerveModule (TurnMotor turnMotor, DriveMotor driveMotor, Rotation2d offset) {
+    public SwerveModule (String name, TurnMotor turnMotor, DriveMotor driveMotor, Rotation2d offset) {
+        m_name = name;
+
         m_turnMotor = turnMotor;
         m_driveMotor = driveMotor;
 
@@ -60,7 +62,7 @@ public class SwerveModule {
         return m_lastCommanded;
     }
 
-    public Rotation2d getAbsoluteAngle(){
+    public Rotation2d getAngle(){
         return m_turnMotor.getAngle();
     }
 
@@ -80,6 +82,10 @@ public class SwerveModule {
 
     public void encoderVoltageCheck(){
         m_turnMotor.encoderVoltageCheck();
+    }
+
+    public String getName() {
+        return m_name;
     }
 
     public void periodic() {

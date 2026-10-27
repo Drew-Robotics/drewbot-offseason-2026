@@ -1,7 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import java.lang.module.Configuration;
-
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;

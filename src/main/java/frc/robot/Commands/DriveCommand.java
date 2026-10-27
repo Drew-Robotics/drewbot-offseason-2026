@@ -23,10 +23,14 @@ public class DriveCommand extends Command {
     public void initialize() {}
 
     public void execute() {
+        // DriveSubsystem.getInstance().fieldOrientedDrive(
+        //     Units.MetersPerSecond.of(m_xVel.getAsDouble()*DriveConstants.kMaxVel.in(Units.MetersPerSecond)), //diagonals go above max speed bc its not on a vector
+        //     Units.MetersPerSecond.of(m_yVel.getAsDouble()*DriveConstants.kMaxVel.in(Units.MetersPerSecond)), 
+        //     Units.RadiansPerSecond.of(m_rotVel.getAsDouble()*DriveConstants.kMaxRotVel.in(Units.RadiansPerSecond)));
         DriveSubsystem.getInstance().fieldOrientedDrive(
-            Units.MetersPerSecond.of(m_xVel.getAsDouble()*DriveConstants.kMaxVel.in(Units.MetersPerSecond)), //diagonals go above max speed bc its not on a vector
-            Units.MetersPerSecond.of(m_yVel.getAsDouble()*DriveConstants.kMaxVel.in(Units.MetersPerSecond)), 
-            Units.RadiansPerSecond.of(m_rotVel.getAsDouble()*DriveConstants.kMaxRotVel.in(Units.RadiansPerSecond)));
+            DriveConstants.kMaxVel.times(m_xVel.getAsDouble()), 
+            DriveConstants.kMaxVel.times(m_yVel.getAsDouble()),
+            DriveConstants.kMaxRotVel.times(m_rotVel.getAsDouble()));
     }
 
     public void end() {}

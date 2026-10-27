@@ -10,8 +10,8 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 
 public class DriveConstants {
-    public static final LinearVelocity kMaxVel = Units.MetersPerSecond.of(0.5); //real max speed of wheels is 25 f/s
-    public static final AngularVelocity kMaxRotVel = Units.RadiansPerSecond.of(2*Math.PI);
+    public static final LinearVelocity kMaxVel = Units.MetersPerSecond.of(2); //real max speed of wheels is 25 f/s
+    public static final AngularVelocity kMaxRotVel = Units.RadiansPerSecond.of(Math.PI);
 
     public static final class GyroscopeConstants {
         public static final int kCanID = 10;
@@ -27,7 +27,7 @@ public class DriveConstants {
         public static final class PID {
             public static final double kP = 1.5; //duty per module radian. CTRE template kP 100 is V per rotation, ~1.5 here
             public static final double kI = 0;
-            public static final double kD = 0;
+            public static final double kD = 1;
         }
     }
 
@@ -82,12 +82,12 @@ public class DriveConstants {
 
     public static final class BackRightModule {
         public static final int kDriveCANID = 9;
-        public static final boolean kDriveInverted = true;
+        public static final boolean kDriveInverted = false;
 
         public static final int kTurnCANID = 2;
         public static final boolean kTurnInverted = false;
 
-        public static final Rotation2d kOffset = Rotation2d.fromRadians(-3.114);
+        public static final Rotation2d kOffset = Rotation2d.fromRadians(0.0541);
     }
 
     public static final class kBodyMeasures{

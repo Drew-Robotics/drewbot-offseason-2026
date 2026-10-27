@@ -110,9 +110,10 @@ public class TurnMotor {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber(m_name + " Encoder" , encoderVoltageCheck());
-        SmartDashboard.putNumber(m_name + "TargetAngle", m_closedLoopController.getSetpoint());
+        SmartDashboard.putNumber(m_name + " Voltage" , encoderVoltageCheck());
+        // SmartDashboard.putNumber(m_name + "TargetAngle", m_closedLoopController.getSetpoint());
         SmartDashboard.putNumber(m_name + "RawAngle", m_encoder.getPosition());
         SmartDashboard.putNumber(m_name + "Angle", getAngle().getRadians());
+        SmartDashboard.putNumber(m_name + "CommandedVelocity", m_closedLoopController.getSetpoint());
     }
 }
