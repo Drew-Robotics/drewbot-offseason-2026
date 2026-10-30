@@ -1,5 +1,7 @@
 package frc.robot.controller;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class DriverController extends Controller{
     public DriverController (int port) {
         super(port);
@@ -15,7 +17,23 @@ public class DriverController extends Controller{
         return applyDeadband(-getLeftX());
     }
 
-    public double getDriveRot() {
+    public double getDriveRotVel() {
         return applyDeadband(-getRightX());
+    }
+
+    public double getDriveRot() {
+        return Math.atan2(-getRightX(), -getRightY());
+    }
+
+    public boolean getYButton() {
+        return y().getAsBoolean();
+    }
+
+    public boolean getXButton() {
+        return x().getAsBoolean();
+    }
+
+    public boolean getBButton() {
+        return b().getAsBoolean();
     }
 }

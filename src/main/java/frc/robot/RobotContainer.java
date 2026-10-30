@@ -28,7 +28,11 @@ public class RobotContainer {
       new DriveCommand(
         m_driverController::getDriveX,
         m_driverController::getDriveY,
-        m_driverController::getDriveRot
+        m_driverController::getDriveRotVel,
+        m_driverController::getDriveRot,
+        m_driverController::getYButton,
+        m_driverController::getXButton,
+        m_driverController::getBButton
       )
     );
 

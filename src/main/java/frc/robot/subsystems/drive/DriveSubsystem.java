@@ -116,7 +116,8 @@ public class DriveSubsystem extends SubsystemBase{
             getModulePositions(), 
             new Pose2d());  
         
-        m_turnPid = new PIDController(0.1, 0, 0);
+        m_turnPid = new PIDController(1, 0, 0);
+        m_turnPid.enableContinuousInput(-Math.PI, Math.PI);
 
         publishInit();
     }
@@ -141,7 +142,8 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void setZero(){
-        m_poser.resetRotation(Rotation2d.fromRadians(0));
+        m_gyro.reset();
+        //m_poser.resetRotation(Rotation2d.fromRadians(0));
     }
 
     public void setChassisSpeed(ChassisSpeeds speeds){
@@ -151,18 +153,18 @@ public class DriveSubsystem extends SubsystemBase{
         setSwerveModuleStates(statesList);
     }
 
-    public void fieldOrientedDrive(LinearVelocity xVel, LinearVelocity yVel, AngularVelocity rotVel) {
+    public void fieldOrientedDrive(LinearVelocity xVel, LinearVelocity yVel, Optional<AngularVelocity> rotVel, Optional<Double> rot) {
         AngularVelocity rv;
-        // if(!rotVel.isEmpty()) {
-            // rv = rotVel.get();
-        // }
-        // else if(!rot.isEmpty()) {
-        //     rv = Units.RadiansPerSecond.of(m_turnPid.calculate(m_gyro.getRotation2d().getRadians(), rot.get().getRadians()));
-        // }
-        // else {
-        //     rv = Units.RadiansPerSecond.of(0);
-        // }
-        rv = rotVel;
+        if(!rotVel.isEmpty()) {
+            rv = rotVel.get();
+        }
+        else if(!rot.isEmpty()) {
+            rv = Units.RadiansPerSecond.of(m_turnPid.calculate(m_gyro.getRotation2d().getRadians(), rot.get()));
+        }
+        else {
+            rv = Units.RadiansPerSecond.of(0);
+        }
+        //rv = rotVel;
 
         ChassisSpeeds speeds = new ChassisSpeeds(xVel.in(Units.MetersPerSecond), yVel.in(Units.MetersPerSecond), rv.in(Units.RadiansPerSecond));
         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, Rotation2d.fromDegrees(m_gyro.getYaw().getValueAsDouble()));
