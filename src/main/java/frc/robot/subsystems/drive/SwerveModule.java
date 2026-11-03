@@ -90,5 +90,6 @@ public class SwerveModule {
 
     public void periodic() {
         m_turnMotor.periodic();
+        m_driveMotor.periodic();
     }
 }

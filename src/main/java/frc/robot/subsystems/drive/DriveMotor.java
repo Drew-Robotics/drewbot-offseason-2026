@@ -14,6 +14,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.constants.DriveConstants;
 import frc.robot.constants.DriveConstants.DriveMotorConstants;
 
@@ -24,8 +25,9 @@ public class DriveMotor {
     private SparkFlex m_motor;
     private RelativeEncoder m_encoder;
     private SparkClosedLoopController m_closedLoopController;
+    private String m_name;
 
-    public DriveMotor (int motorID, boolean inverted) {
+    public DriveMotor (String name, int motorID, boolean inverted) {
         m_motor = new SparkFlex(motorID, MotorType.kBrushless);
         m_encoder = m_motor.getEncoder();
         m_closedLoopController = m_motor.getClosedLoopController();
@@ -45,6 +47,8 @@ public class DriveMotor {
             .outputRange(-1, 1);
 
         m_motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        m_name = name;
     }
 
     public LinearVelocity getVelocity () {
@@ -63,5 +67,9 @@ public class DriveMotor {
 
     public void setVelocity(LinearVelocity commandedVelocity){
         m_closedLoopController.setSetpoint(commandedVelocity.in(Units.MetersPerSecond), ControlType.kVelocity);
+   }
+
+    public void periodic() {
+        SmartDashboard.putNumber(m_name+" velocity", m_encoder.getVelocity());
     }
 }

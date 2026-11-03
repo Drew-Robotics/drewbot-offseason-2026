@@ -10,7 +10,7 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 
 public class DriveConstants {
-    public static final LinearVelocity kMaxVel = Units.MetersPerSecond.of(2); //real max speed of wheels is 25 f/s
+    public static final LinearVelocity kMaxVel = Units.MetersPerSecond.of(0.5); //real max speed of wheels is 25 f/s
     public static final AngularVelocity kMaxRotVel = Units.RadiansPerSecond.of(Math.PI);
 
     public static final class GyroscopeConstants {

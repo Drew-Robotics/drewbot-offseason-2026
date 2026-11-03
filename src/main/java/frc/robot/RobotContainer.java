@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.controller.DriverController;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.TurnTuneCommand;
@@ -17,10 +18,13 @@ import frc.robot.constants.MiscConstants;
 
 public class RobotContainer {
   private final DriverController m_driverController;
+  private final LEDs m_leds;
 
   public RobotContainer() {
     m_driverController = new DriverController(MiscConstants.kDriverControllerPort); 
     configureBindings();
+
+    m_leds = new LEDs();
   }
 
   private void configureBindings() {

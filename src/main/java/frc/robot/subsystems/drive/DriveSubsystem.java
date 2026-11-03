@@ -58,6 +58,7 @@ public class DriveSubsystem extends SubsystemBase{
                     DriveConstants.FrontLeftModule.kOffset
                 ),
                 new DriveMotor(
+                    "Front Left",
                     DriveConstants.FrontLeftModule.kDriveCANID, 
                     DriveConstants.FrontLeftModule.kDriveInverted
                 ),
@@ -72,6 +73,7 @@ public class DriveSubsystem extends SubsystemBase{
                     DriveConstants.FrontRightModule.kOffset
                 ),
                 new DriveMotor(
+                    "Front Right",
                     DriveConstants.FrontRightModule.kDriveCANID, 
                     DriveConstants.FrontRightModule.kDriveInverted
                 ),
@@ -86,6 +88,7 @@ public class DriveSubsystem extends SubsystemBase{
                     DriveConstants.BackLeftModule.kOffset
                 ),
                 new DriveMotor(
+                    "Back Left",
                     DriveConstants.BackLeftModule.kDriveCANID, 
                     DriveConstants.BackLeftModule.kDriveInverted
                 ),
@@ -100,6 +103,7 @@ public class DriveSubsystem extends SubsystemBase{
                     DriveConstants.BackRightModule.kOffset
                 ),
                 new DriveMotor(
+                    "Back Right",
                     DriveConstants.BackRightModule.kDriveCANID, 
                     DriveConstants.BackRightModule.kDriveInverted
                 ),
@@ -116,7 +120,7 @@ public class DriveSubsystem extends SubsystemBase{
             getModulePositions(), 
             new Pose2d());  
         
-        m_turnPid = new PIDController(1, 0, 0);
+        m_turnPid = new PIDController(1.5, 0, 0.1);
         m_turnPid.enableContinuousInput(-Math.PI, Math.PI);
 
         publishInit();
